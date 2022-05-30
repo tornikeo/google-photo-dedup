@@ -62,12 +62,15 @@ def get_credentials():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(client_secret_path, SCOPES)
-            creds = flow.run_local_server()
+            flow = InstalledAppFlow.from_client_secrets_file('client_id.json',
+             SCOPES,
+            #  redirect_uri='http://localhost:8097'
+             )
+            creds = flow.run_local_server(port=8097)
         # Save the credentials for the next run
-        print('Storing credentials to ' + credential_path)
-        with open(credential_path, 'wb') as token:
-            pickle.dump(creds, token)
+        # print('Storing credentials to ' + credential_path)
+        # with open(credential_path, 'wb') as token:
+        #     pickle.dump(creds, token)
 
     return creds
 
